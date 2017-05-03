@@ -2,6 +2,7 @@
 from poligono import Poligono
 from punto import Punto
 from arista import Arista
+from segmento import Segmento
 from grafica import Grafica
 
 import math
@@ -15,16 +16,20 @@ class Triangulacion():
 
 	def triangular(self):
 		poligono_orejon = self.poligono
-		vertices = self.poligono.getVertices()
-		#triangulacion = Grafica()
+		print("poligono: "+poligono_orejon.toString())
 		con_orejas = True
-		while con_orejas:
+		while con_orejas and len(poligono_orejon.getVertices()) > 3:
 			oreja = self.get_oreja(poligono_orejon)
 			if oreja == False:
+				print("no se encontraron mas orejas")
 				con_orejas = False
 			else:
-				self.remove_oreja(poligono_orejon, oreja[2])
+				poligono_orejon = self.remove_oreja(poligono_orejon, oreja[2])
+				print("vertice oreja:"+oreja[2].toString())
+				print("poligono orejon: ")
+				print(poligono_orejon.toString())
 				self.triangulacion.agregar_arista(oreja[1])
+	
 		return self.triangulacion
 
 	# def triangular(self, poligono):
@@ -49,20 +54,29 @@ class Triangulacion():
 		vertices = poligono.getVertices()
 		es_oreja = True
 		for v in vertices:
+			t.limpiaPoligono()
+			print("-------------------------------------------------------")
+			print("analizando el vertice "+v.toString())
 			v_i = poligono.anterior(v)
 			v_j = poligono.siguiente(v)
 			t.addV(v)
 			t.addV(v_i)
 			t.addV(v_j)
-
-			if math.degrees(v.angulo(v_i, v_j)) >= 180:
+			t.cerrar()
+			#print("v: "+v.toString()+" v_i: "+v_i.toString()+" v_j: "+v_j.toString())
+			s = Segmento(v_i, v)
+			if s.lado_p(v_j) == "der" or s.lado_p(v_j) == "col":
 				continue
 			else:
-				for u in vertices:
-					if (u == v) or (u == v_i) or (u == v_j):
-						continue
-
+				v_restantes = vertices[:]
+				v_restantes.remove(v)
+				v_restantes.remove(v_i)
+				v_restantes.remove(v_j)
+				es_oreja = True
+				for u in v_restantes:
+					print(t.isInterior(u))
 					if t.isInterior(u):
+						print("el punto "+u.toString()+" esta en el interior interior del triangulo: "+t.toString()+"   :(")
 						es_oreja = False
 
 				if es_oreja:
@@ -70,26 +84,6 @@ class Triangulacion():
 		return False
 
 
-	def remove_oreja(self, poligono, v_oreja):
-		print(v_oreja.toString())
-		print(poligono.toString())
-		poligono.removeV(v_oreja)
-		return poligono
-		# v_i = poligono.anterior(v_oreja)
-		# v_j = poligono.siguiente(v_oreja)
-		# d = Arista(v_i, v_j)
-		# v = poligono.getVertices()
-		# a = poligono.getAristas()
-		# if v_oreja in v:
-		# 	v = v.remove(v_oreja)
-		# 	a = a.remove(d)
-		# 	poligono.vertices = v
-		# 	poligono.aristas = a
-		# 	return poligono
-		# else:
-		# 	#print(v_oreja.toString())
-		# 	#print(poligono.toString())
-		# 	return False
 
 
 

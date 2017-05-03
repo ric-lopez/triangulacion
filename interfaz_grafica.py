@@ -20,6 +20,7 @@ g = Grafica()
 triangulacion = Grafica()
 def setup():
 	size(800, 800)
+	#vertices = [(56.0,357.0),(265.0,284.0),(141.0,207.0),(368.0,148.0),(347.0,266.0),(279.0,371.0),(350.0,490.0),(160.0,510.0),(198.0,382.0),(32.0,486.0)]
 	vertices = [(56.0,357.0),(265.0,284.0),(141.0,207.0),(368.0,148.0),(347.0,266.0),(525.0,306.0),(494.0,175.0),(677.0,286.0),(682.0,546.0),(482.0,493.0),(588.0,408.0),(410.0,438.0),(440.0,351.0),(279.0,371.0),(350.0,490.0),(160.0,510.0),(198.0,382.0),(32.0,486.0)]
 	#vertices = [(121.0,332.0),
 	#			(168.0,401.0),
@@ -48,10 +49,12 @@ def setup():
 	triangulacion = t.triangular()
 	print(triangulacion.toString())
 
+	mi_interfaz = Interfaz(g)
+	mi_interfaz.draw_grafica(g)
+	stroke(0,0,255)
+	
+	mi_interfaz.draw_grafica(triangulacion)
 
 def draw():
-	stroke(0)
-	mi_interfaz = Interfaz(g)
-	#mi_interfaz.draw_grafica(g)
-	stroke(0)
-	mi_interfaz.draw_grafica(triangulacion)
+	pass
+	

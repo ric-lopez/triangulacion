@@ -27,9 +27,9 @@ class Recta:
 
 	def interseccion_pp(self, l):
 		l1 = self.punto_pendiente()
-		print("l1: m="+str(l1[0])+", b="+str(l1[1]))
+		#print("l1: m="+str(l1[0])+", b="+str(l1[1]))
 		l2 = l.punto_pendiente()
-		print("l2: m="+str(l2[0])+", b="+str(l2[1]))
+		#print("l2: m="+str(l2[0])+", b="+str(l2[1]))
 		if(l1[0] == l2[0]):
 			if(l1[1] == l2[1]):
 				return 'iguales'
@@ -51,7 +51,7 @@ class Recta:
 			else:
 				x = (l2[1]-l1[1])/(l1[0]-l2[0])
 				y = (l1[0]*x)+l1[1]
-				print("interseccion: " + str(x) + "," + str(y))
+				#print("interseccion: " + str(x) + "," + str(y))
 				return Punto(x, y)
 
 	def interseccion_segm(self, s):
@@ -101,7 +101,7 @@ class Recta:
 		#if(((min(a.getX(), b.getX()) <= p_int.getX()) and (max(a.getX(), b.getX()) >= p_int.getX())) and ((min(a.getY(), b.getY()) <= p_int.getY()) and (max(a.getY(), b.getY()) >= p_int.getY()))):
 			return p_int
 		else:
-			print("la interseccion no esta dentro del segmento o arista: "+s.toString())
+			#print("la interseccion no esta dentro del segmento o arista: "+s.toString())
 			return False
 
 	def interseccion_semirrecta_segm(self, s):

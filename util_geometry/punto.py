@@ -87,14 +87,14 @@ class Punto:
 		qy = oy + math.sin(angulo) * (px - ox) + math.cos(angulo) * (py - oy)
 		return Punto(qx, qy)
 
-	def angulo(self, p1, p2):
-		"""Calcula el angulo formado por el punto que llama el metodo y las puntos p1 y p2"""
-		v1 = (p1.x - self.x, p1.y - self.y)
-		v2 = (p2.x - self.x, p2.y - self.y)
+	# def angulo(self, p1, p2):
+	# 	"""Calcula el angulo formado por el punto que llama el metodo y las puntos p1 y p2"""
+	# 	v1 = (p1.x - self.x, p1.y - self.y)
+	# 	v2 = (p2.x - self.x, p2.y - self.y)
 
-		coseno = math.fabs(v1[0]*v2[0] + v1[1]*v2[1]) / (math.sqrt(v1[0]*v1[0] + v1[1]*v1[1]) * math.sqrt(v2[0]*v2[0] + v2[1]*v2[1]))
-		angulo = math.acos(coseno)
-		return angulo
+	# 	coseno = math.fabs(v1[0]*v2[0] + v1[1]*v2[1]) / (math.sqrt(v1[0]*v1[0] + v1[1]*v1[1]) * math.sqrt(v2[0]*v2[0] + v2[1]*v2[1]))
+	# 	angulo = math.acos(coseno)
+	# 	return angulo
 
 	def toString(self):
 		"""Regresa el punto como objeto tipo cadena"""

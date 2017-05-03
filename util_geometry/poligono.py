@@ -165,6 +165,7 @@ class Poligono():
 		self.aristas.remove(Arista(v, siguiente))
 		self.aristas.remove(Arista(anterior, v))
 		self.aristas.append(Arista(anterior, siguiente))
+		#self.aristas.append(Arista(siguiente, anterior))
 
 	def pop(self):
 		'''Elimina el ultimo vertice agregado y la arista que incide'''
