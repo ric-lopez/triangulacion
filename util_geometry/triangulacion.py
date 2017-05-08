@@ -84,6 +84,7 @@ class Triangulacion():
 		return False
 
 
-
-
+	def remove_oreja(self, poligono, v_oreja):
+ 		poligono.removeV(v_oreja)
+ 		return poligono
 
