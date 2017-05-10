@@ -294,5 +294,16 @@ class Poligono():
 
 		return caja
 
+	def copiar(self):
+		"""Crea una instancia diferente del objeto Poligono que llama al metodo"""
+		p = Poligono()
+		p.vertices = self.vertices[:]
+		p.aristas = self.aristas[:]
+		p.cerrado = self.cerrado
+		p.orientacion = self.orientacion
+		return p
+
+
+
 
 

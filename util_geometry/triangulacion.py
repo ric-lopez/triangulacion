@@ -11,11 +11,11 @@ class Triangulacion():
 
 	
 	def __init__(self, poligono):
-		self.poligono = poligono
+		self.poligono = poligono.copiar()
 		self.triangulacion = Grafica()
 
 	def triangular(self):
-		poligono_orejon = self.poligono
+		poligono_orejon = self.poligono.copiar()
 		print("poligono: "+poligono_orejon.toString())
 		con_orejas = True
 		while con_orejas and len(poligono_orejon.getVertices()) > 3:
@@ -29,24 +29,30 @@ class Triangulacion():
 				print("poligono orejon: ")
 				print(poligono_orejon.toString())
 				self.triangulacion.agregar_arista(oreja[1])
-	
+
+		for a in self.poligono.getAristas():
+			self.triangulacion.agregar_arista(a)
+
 		return self.triangulacion
 
-	# def triangular(self, poligono):
-	# 	if len(poligono.getVertices()) == 3:
-	# 		return self.triangulacion
+	def por_pasos(self, poligono):
+		orejon = poligono
+		if len(orejon.getVertices()) <= 3:
+			return False
+		else:
+			oreja = self.get_oreja(orejon)
+			if oreja == False:
+				print("no se encontraron mas orejas")
+				return False
+			else:
+				orejon = self.remove_oreja(orejon, oreja[2])
+				print("vertice oreja:"+oreja[2].toString())
+				print("poligono orejon: ")
+				print(orejon.toString())
+				self.triangulacion.agregar_arista(oreja[1])
+				delay(1000)
+				return oreja[1]
 
-	# 	else:
-	# 		oreja = self.get_oreja(poligono)
-	# 		if not(oreja):
-	# 			print("ocurrio un error al obtener la oreja")
-	# 			return self.triangulacion
-	# 		self.triangulacion.agregar_arista(oreja[1])
-	# 		poligono_orejon = self.remove_oreja(poligono, oreja[2])
-	# 		if not(poligono_orejon):
-	# 			print("ocurrio un error al remover la oreja")
-	# 			return self.triangulacion
-	# 		self.triangular(poligono_orejon)
 
 
 	def get_oreja(self, poligono):
@@ -65,7 +71,12 @@ class Triangulacion():
 			t.cerrar()
 			#print("v: "+v.toString()+" v_i: "+v_i.toString()+" v_j: "+v_j.toString())
 			s = Segmento(v_i, v)
-			if s.lado_p(v_j) == "der" or s.lado_p(v_j) == "col":
+			if poligono.getOrientacion() == 1:
+				lado_interior = "der"
+			else:
+				lado_interior = "izq"
+
+			if s.lado_p(v_j) == lado_interior or s.lado_p(v_j) == "col":
 				continue
 			else:
 				v_restantes = vertices[:]
@@ -88,3 +99,6 @@ class Triangulacion():
  		poligono.removeV(v_oreja)
  		return poligono
 
+
+ 	def flip_diagonal(self):
+ 		pass
