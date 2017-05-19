@@ -4,6 +4,8 @@ from punto import Punto
 from arista import Arista
 from segmento import Segmento
 from grafica import Grafica
+from dcel import DCEL
+from nube_puntos import NubePosicionGeneral
 
 import math
 
@@ -96,9 +98,71 @@ class Triangulacion():
 
 
 	def remove_oreja(self, poligono, v_oreja):
- 		poligono.removeV(v_oreja)
- 		return poligono
+		poligono.removeV(v_oreja)
+		return poligono
 
 
- 	def flip_diagonal(self):
- 		pass
+	def flip_diagonal(self):
+		pass
+
+class TriangulacionPuntos():
+	"""Clase TriangulacionPuntos"""
+
+	def __init__(self, nube):
+		self.nube = nube
+		self.triangulacion = Grafica()
+		self.dcel_triangulacion = DCEL()
+
+	def get_nube(self):
+		return self.nube
+
+	def get_dcel_triangulacion(self):
+		return self.dcel_triangulacion
+
+	def ordena_puntos(self):
+		ordenados = sorted(self.nube.get_puntos(), key=lambda punto: punto.x)
+		return ordenados
+
+	def add_triangulo(self, v1, v2, v3):
+		a1 = Arista(v1, v2)
+		a2 = Arista(v2, v3)
+		a3 = Arista(v3, v1)
+
+		self.triangulacion.agregar_arista(a1)
+		self.triangulacion.agregar_arista(a2)
+		self.triangulacion.agregar_arista(a3)
+
+	def triangular(self):
+		ordenados = self.ordena_puntos()
+		self.add_triangulo(ordenados[0], ordenados[1], ordenados[2])
+		visitados = [ordenados[0], ordenados[1], ordenados[2]]
+		for i in range(len(ordenados)-3):
+			#print("--------------------------------------------")
+			#print("punto: "+ordenados[i+3].toString())
+			aristas_triang = self.triangulacion.get_aristas()
+			for v in visitados:
+				#print(self.triangulacion.toString())
+				arista = Arista(ordenados[i+3], v)
+				interseccion = False
+				for a in aristas_triang:
+					if arista.intersecta(a):
+						#print(arista.toString()+" y "+a.toString()+" se intersectan")
+						interseccion = True
+					else:
+						#print(arista.toString()+" y "+a.toString()+" no se intersectan")
+						continue
+				if not(interseccion):
+					self.triangulacion.agregar_arista(arista)
+			visitados.append(ordenados[i+3])
+
+		self.dcel_triangulacion.construir(self.triangulacion)
+
+
+	def flip_arista(self, a):
+		pass
+
+
+
+
+
+
